@@ -13,26 +13,25 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MaClasseTest {
 
-
     @Test
     void viewAsserts(){
 
-        MaClasse m1 = new MaClasse();
-        MaClasse m2 = new MaClasse();
+        MonInterface m1; // = new MaClasse();
+        MonInterface m2; // = new MaClasse();
 
         // ASSERT (not) EQUALS : verifie l'égalité (l'inégalité) avec la methode .equals(...)
 //        assertEquals( m1, m2 ); // success // pas de message
 //        assertEquals( m1, m2, "echec" ); // message généré dans tous les cas
 //        assertEquals( m1, m2, () -> { return "message lourd à créer"; }); // ne génére le message que si le test echoue
-//        assertNotEquals(m1, m2); // failure
+//        assertNotEquals( m1, m2 ); // failure
 
         // ASSERT TRUE/FALSE : vérifie si le boolean est vrai/faux
 //        MaClasse[] tab1 = new MaClasse[]{ m1, m1 };
 //        MaClasse[] tab2 = new MaClasse[]{ m2, m2 };
-//        assertTrue( tab1.length == 2, "c'est vrai" ); // success
+//        assertTrue( tab1.length == 2, "c'est pas vrai" ); // success
 //        assertTrue( () -> tab2.length != 2, "c'est pas vrai :)" ); // failure
 //        assertFalse( tab1.length == 2, "c'est vrai" ); // failure
-//        assertFalse( () -> tab2.length != 2, "c'est pas vrai :)" ); // success
+//        assertFalse( () -> tab2.length != 2, "c'est vrai :)" ); // success
 
         // ASSERT (not) SAME : vérifie si les deux params font référence au même Objet(adresse)
 //        assertSame(m1, m2); // failure
@@ -67,7 +66,6 @@ class MaClasseTest {
 
         // ASSERT LINES MATCH : verifie si les lines sont les mêmes pour les 2 ensembles
 //        assertLinesMatch(Arrays.asList(m1.maMethode(m2)), Arrays.asList(m2.maMethode(m1)));
-
 
         // ASSERT TIMEOUT (preemptively): verifie que le temps d'execution de l'executable
         // coupe après la Duration indiquée si preemptively
@@ -134,20 +132,15 @@ class MaClasseTest {
 
 
     @Test
-    void maMethode_test1() {
-
-        MaClasse monObjet = new MaClasse();
-        String monResultat = monObjet.maMethode("maValeur");
-        assertEquals("mon retour -> maValeur", monResultat);
-        // assertEquals(Object,Object)
+    void maMethode_ifNullArg_IllegalArgumentException() {
+        MonInterface monObjet = new MaClasse();
+        assertThrows(IllegalArgumentException.class,() -> monObjet.maMethode(null));
     }
 
     @Test
     void maMethode_test2() {
-
-        MaClasse monObjet = new MaClasse();
+        MonInterface monObjet = new MaClasse();
         String monResultat = monObjet.maMethode("maValeur");
         assertEquals("mon retour : maValeur", monResultat);
-        // assertEquals(Object,Object)
     }
 }

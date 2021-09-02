@@ -1,6 +1,6 @@
 package bstorm.akimts;
 
-public class MaClasse {
+public class MaClasse implements MonInterface {
 
     public String maMethode(Object monParam){
         if( monParam == null )
