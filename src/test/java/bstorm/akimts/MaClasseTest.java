@@ -1,17 +1,39 @@
 package bstorm.akimts;
 
-import org.junit.jupiter.api.Test;
+import bstorm.akimts.exo.Entreprise;
+import bstorm.akimts.exo.TypeEntreprise;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.ThrowingSupplier;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.*;
 
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.*;
 
 class MaClasseTest {
+
+    @BeforeAll
+    static void setupAll(){
+        System.out.println("GLOBAL SETUP : MaClasseTest");
+    }
+
+    @AfterAll
+    static void tearDownAll(){
+        System.out.println("GLOBAL TEAR DOWN : MaClasseTest");
+    }
+
+    @BeforeEach
+    void setup(){
+        System.out.println("setup");
+
+    }
 
     @Test
     void viewAsserts(){
@@ -130,17 +152,38 @@ class MaClasseTest {
 
     }
 
+    @Nested
+    class NestedMaClasseTest{
 
-    @Test
-    void maMethode_ifNullArg_IllegalArgumentException() {
-        MonInterface monObjet = new MaClasse();
-        assertThrows(IllegalArgumentException.class,() -> monObjet.maMethode(null));
+        private MaClasse monObjet;
+
+        @BeforeEach
+        void setup(){
+            System.out.println("setup nested");
+            monObjet = new MaClasse();
+        }
+
+        @Test
+        @Tag("monObjetDependant")
+        void maMethode_ifNullArg_IllegalArgumentException() {
+            assertThrows(IllegalArgumentException.class,() -> monObjet.maMethode(null));
+        }
+
+        @Test
+        @Tag("monObjetDependant")
+        @Tag("lifecycle")
+        void maMethode_test2() {
+            String monResultat = monObjet.maMethode("maValeur");
+            assertEquals("mon retour : maValeur", monResultat);
+        }
     }
 
+
     @Test
-    void maMethode_test2() {
-        MonInterface monObjet = new MaClasse();
-        String monResultat = monObjet.maMethode("maValeur");
-        assertEquals("mon retour : maValeur", monResultat);
+//    @Disabled
+    @Tag("ctor1")
+    @DisplayName("Autre fonctionnalités de JUnit")
+    void autres(){
+//        assumeTrue(false);
     }
 }
